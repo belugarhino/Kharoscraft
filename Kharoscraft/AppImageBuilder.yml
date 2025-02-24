@@ -1,0 +1,31 @@
+version: 1
+
+AppDir:
+  path: ./AppDir  # Directory where the AppImage will be built
+  app_info:
+    id: com.github.belugarhino.kharoscraft  # Unique identifier for your app
+    name: Kharoscraft  # Name of your application
+    version: "1.0"  # Version of your application (must be a string)
+    exec: game.py  # The main Python script to run
+    icon: icon.png  # Icon file for your application
+  files:
+    # Use a dictionary to map source files to their destination in the AppDir
+    game.py: usr/bin/game.py
+    controls.py: usr/bin/controls.py
+    custom_player.py: usr/bin/custom_player.py
+    menu.py: usr/bin/menu.py
+    world.py: usr/bin/world.py
+    README.md: usr/share/doc/kharoscraft/README.md
+    icon.png: usr/share/icons/hicolor/256x256/apps/kharoscraft.png
+  apt:
+    packages:
+      - python3  # Required system packages
+      - python3-pip
+  python:
+    pip:
+      requirements: requirements.txt  # Include Python dependencies from requirements.txt (if you have one)
+
+AppImage:
+  arch: x86_64  # Architecture (usually x86_64 for 64-bit systems)
+  update-information: None  # Leave as None unless you have an update server
+  sign-key: None  # Leave as None unless you want to sign the AppImage
