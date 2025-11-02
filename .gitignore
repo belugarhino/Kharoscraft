@@ -1,0 +1,10 @@
+/build/
+/.cache/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+*.o
+*.obj
+*.pdb
+.DS_Store
