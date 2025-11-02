@@ -1,20 +1,51 @@
 # controls.py
-from ursina import *
+"""Utility helpers for handling player controls and pause mechanics."""
+
+from __future__ import annotations
+
+from ursina import Entity, Text, camera, color, mouse
+
 
 def setup_controls(menu, player):
-    """Handles game controls and pause functionality."""
-    
+    """Configure key bindings and an on-screen HUD for the player."""
+
+    help_text = Text(
+        text="WASD to move • Space to jump • ESC to pause",
+        position=(-0.5 * camera.aspect_ratio, 0.45),
+        origin=(-0.5, 0.5),
+        background=True,
+        color=color.rgb(120, 180, 255),
+        alpha=0.7,
+        enabled=False,
+    )
+
+    crosshair = Text(text="+", scale=2, origin=(0, 0), color=color.rgba(255, 255, 255, 220), enabled=False)
+
+    def set_paused(paused: bool) -> None:
+        mouse.locked = not paused
+        menu.enabled = paused
+        player.enabled = not paused
+        help_text.enabled = not paused
+        crosshair.enabled = not paused
+
     def toggle_pause():
-        """Toggles mouse lock and pause menu."""
-        mouse.locked = not mouse.locked
-        menu.enabled = not menu.enabled
-        player.enabled = not menu.enabled  # Disable player movement when paused
-    
+        """Toggle the pause menu and cursor lock state."""
+
+        set_paused(not menu.enabled)
+
     def input(key):
-        """Handles key presses."""
-        if key == 'escape':
+        """Handle key presses."""
+
+        if key == "escape":
             toggle_pause()
-    
-    # Create an invisible entity to handle inputs globally
+
     controller = Entity(ignore_paused=True)
-    controller.input = input  # Attach the input function
+    controller.input = input
+
+    # Expose the helpers so other modules can control the pause state.
+    controller.toggle_pause = toggle_pause  # type: ignore[attr-defined]
+    controller.set_paused = set_paused  # type: ignore[attr-defined]
+    controller.help_text = help_text  # type: ignore[attr-defined]
+    controller.crosshair = crosshair  # type: ignore[attr-defined]
+
+    return controller
