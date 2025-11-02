@@ -1,19 +1,38 @@
 # Kharoscraft
 
-Welcome to *Kharoscraft*, a survival, building, and exploration game set in a unique world influenced by Kharoism. The game focuses on creating, crafting, and battling through an ever-changing world, filled with diverse creatures and mystical elements.
+Kharoscraft is a Linux-focused 3D voxel sandbox inspired by classic block-building games.  
+The engine is written in modern C++20, uses SDL2 for platform abstraction, and drives a fully programmable OpenGL 4 core renderer tailored for dense voxel scenes.
 
-## Key Features:
+## Features
+- Chunked voxel world with configurable dimensions and deterministic noise-based terrain generation.
+- Mesh builder with face culling to keep GPU workloads efficient.
+- Free-flying spectator camera with configurable mouse sensitivity and smooth damping.
+- Extensible renderer architecture with shader hot-loading and centralized resource lifetime management.
 
-- **Procedural World Generation**: Each world is unique, with random generation ensuring every playthrough offers fresh experiences.
-- **Building & Crafting**: A block-based building system allows you to create your own structures. Infuse your creations with magical energies to enhance them.
-- **Magic System**: The game includes a dynamic magic system, tied to the mystical energies that permeate the world. Craft enchanted equipment and discover powerful artifacts.
-- **Creatures**: The world is populated with a variety of creatures, including divine beings, wildlife, and **Hollowed**—a race that attacks players on sight. These hostile creatures are a major component throughout the game, and you must face them to survive.
-- **Hardcore Mode**: For an extra challenge, Hardcore Mode is available, where death is permanent, making every decision and encounter a matter of life and death.
+## Getting started (Ubuntu 22.04+)
+```bash
+sudo apt update
+sudo apt install build-essential cmake libsdl2-dev libgl1-mesa-dev libglu1-mesa-dev
 
-## Contributions
+cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+cmake --build build -j
+./build/kharoscraft
+```
 
-Contributions are always welcome! As a beginner coder, I am open to any help, advice, or improvements you may have. Whether you want to suggest features, fix bugs, or help with the game's development, your input is appreciated.
+## Controls
+- **W / A / S / D** – Move relative to the camera.
+- **Space / Left Ctrl** – Ascend / descend.
+- **Shift** – Boost speed.
+- **Mouse** – Look around (relative mode).
+- **F5** – Reload shaders from disk.
+- **Esc** – Release the mouse and quit.
+
+## Project layout
+```
+assets/            Runtime shader files.
+include/           Public headers grouped by subsystem.
+src/               Engine implementation files.
+```
 
 ## License
-
-This project is licensed under the MIT License.
+This repository is distributed under the MIT License. See [`LICENSE`](LICENSE) for details.
